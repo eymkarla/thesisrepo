@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Dialect
+from .models import Dialect, Language
 from django.conf import settings
 
 class DialectForm(forms.ModelForm):

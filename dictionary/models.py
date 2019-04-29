@@ -8,3 +8,10 @@ class Dialect(models.Model):
 
 	def __str__(self):
 		return "{} - {}".format(self.dialect, self.word)
+
+class Language(models.Model):
+	dialect = models.CharField(max_length=50)
+	word = models.CharField(max_length=50)
+	
+	def __str__(self):
+		return "{} - {}".format(self.dialect, self.word)

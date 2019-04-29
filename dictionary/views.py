@@ -43,3 +43,24 @@ def impcsv(request):
 
 	context = {}
 	return render(request, template, context)
+
+def samples(request):
+	test = 'Kunta tigbas harayu Pangit test test2'
+	test_lower = test.lower()
+	user_inputs = test_lower.split(' ')
+	warays = Language.objects.filter(dialect='Waray')
+	cebus = Language.objects.filter(dialect='Cebuano')
+	waray_count = 0
+	cebu_count = 0
+
+	for waray in warays:
+		for user_input in user_inputs:
+			if waray.word == user_input:
+				waray_count += 1
+	
+	for cebu in cebus:
+		for user_input in user_inputs:
+			if cebu.word == user_input:
+				cebu_count += 1
+				
+	return render(request,'classifier/samples.html')
