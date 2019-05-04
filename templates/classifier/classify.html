@@ -1,0 +1,15 @@
+<div class="home_content text-center">
+							<div class="home_title">What do you want to classify?</div>
+							<div class="domain_search">
+								<div class="domain_search_background"></div>
+								<form method="POST"class="domain_search_form" id="domain_search_form">
+									{% csrf_token %}  
+									{{ form.as_p }}
+									<button type="submit" name="classify" class="domain_search_button">classify</button>
+								</form>
+							</div>
+							{{ text }}
+							{{ WARAY }}
+							{{ CEBUANO }}
+							{{ HILIGAYNON }}
+						</div>

@@ -45,7 +45,7 @@ def impcsv(request):
 	return render(request, template, context)
 
 def samples(request):
-	test = 'Kunta tigbas harayu Pangit test test2'
+	test = 'sirong sirong test test2'
 	test_lower = test.lower()
 	user_inputs = test_lower.split(' ')
 	warays = Language.objects.filter(dialect='Waray')
@@ -62,5 +62,7 @@ def samples(request):
 		for user_input in user_inputs:
 			if cebu.word == user_input:
 				cebu_count += 1
-				
+
+	#import pdb; pdb.set_trace()
+
 	return render(request,'classifier/samples.html')

@@ -89,9 +89,10 @@
 							<div class="home_title">What do you want to classify?</div>
 							<div class="domain_search">
 								<div class="domain_search_background"></div>
-								<form action="#" class="domain_search_form" id="domain_search_form">
+								<form method="POST" action="{% url 'index' %}" class="domain_search_form" id="domain_search_form">
+									{% csrf_token %}  
 									<input type="text" class="domain_search_input" placeholder="Enter text here.." required="required">
-									<button class="domain_search_button">classify</button>
+									<button type="submit" name="classify" class="domain_search_button">classify</button>
 								</form>
 							</div>
 						</div>
@@ -102,14 +103,7 @@
 	</div>
 
 
-	<!-- Footer -->
 
-<footer class="footer">
-		<div class="copyright_bar text-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-	</footer>
-</div>
 
 <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 <script src="{% static 'styles/bootstrap-4.1.2/popper.js' %}"></script>
