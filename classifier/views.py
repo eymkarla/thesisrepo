@@ -31,16 +31,10 @@ class ResultView(TemplateView):
 	def get(self, request, *args, **kwargs):
 		text_input = deepcopy(kwargs['text_input'])
 		form = InputForm(initial={'text_input':text_input})
-		naive1 = NaiveBayes().my_count(text_input)
-		naive2 = NaiveBayes().dcount(naive1)
-		#naive3 = NaiveBayes().train(naive2)
+		naive1 = NaiveBayes.train(text_input)
 		print(naive1)
-		print(naive2)
-		return render(request, self.template_name, {'form': form, 'display_input': text_input})
 
-
-
-
+		return render(request, self.template_name, {'form': form, 'display_input': text_input}, )
 
 
 def home(request):
