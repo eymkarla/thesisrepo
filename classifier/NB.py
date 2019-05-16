@@ -1,83 +1,126 @@
 import math
+import re
+import pandas as pd
 from copy import deepcopy
 from dictionary.models import Language
 
 
 class NaiveBayes:
+
 			
-	def train(self, *args):
+	def train_waray(self, *args):
 		waray_count = Language.objects.filter(dialect='Waray').count()
-		cebu_count = Language.objects.filter(dialect='Cebuano').count()
-		hili_count = Language.objects.filter(dialect='Hiligaynon').count()
 		doc_count = Language.objects.count()
 		warays = Language.objects.filter(dialect='Waray')
-		hiligs = Language.objects.filter(dialect='Hiligaynon')
-		cebus = Language.objects.filter(dialect='Cebuano')
 		sentence = self.lower()
-		user_inputs = sentence.split(' ')
-		war_count = 0
-		ceb_count = 0
-		hil_count = 0
-		wars_count = 1
-		cebs_count = 1
-		hilis_count = 1
+		user_inputs = sentence.split("stop_words", ' ')
+		stop_words = ["ako","amua","ato","busa","ikaw","ila","ilang","imo","imong","iya","iyang","kaayo",
+		"kana","kaniya","kaugalingon","kay","kini","kinsa","kita","lamang","mahimong","mga","mismo","nahimo",
+		"nga","pareho","pud","sila","siya","unsa","sa","ug","nang", "ng","diay", "atu"]
+		war_count = 1
 
 		for waray in warays:
 			for user_input in user_inputs:
 				if waray.word == user_input:
-					war_count += (1 + 1) / (waray_count + doc_count)
-					wars_count *= war_count
-					wars_counts = wars_count / 2
+					war_count *= (1 + 1) / (waray_count + doc_count)
+		import pdb; pdb.set_trace()
+		return war_count
+	
+	def train_cebuano(self, *args):
+		cebu_count = Language.objects.filter(dialect='Cebuano').count()
+		doc_count = Language.objects.count()
+		cebus = Language.objects.filter(dialect='Cebuano')
+		sentence = self.lower()
+		user_inputs = sentence.split(' ')
+		ceb_count = 1
 
 		for cebu in cebus:
 			for user_input in user_inputs:
 				if cebu.word == user_input:
-					ceb_count += (1 + 1) / (cebu_count + doc_count)
-					cebs_count *= ceb_count
-					cebs_counts = cebs_count / 2
+					ceb_count *= (1 + 1) / (cebu_count + doc_count)
+
+		return ceb_count
+
+	def train_hiligaynon(self, *args):
+		hili_count = Language.objects.filter(dialect='Hiligaynon').count()
+		doc_count = Language.objects.count()
+		hiligs = Language.objects.filter(dialect='Hiligaynon')
+		sentence = self.lower()
+		user_inputs = sentence.split(' ')
+		hil_count = 1
 
 		for hilig in hiligs:
 			for user_input in user_inputs:
 				if hilig.word == user_input:
-					hil_count += (1 + 1) / (hili_count + doc_count)
-					hilis_count *= hil_count
-					hilis_counts = hilis_count / 2
+					hil_count *= (1 + 1) / (hili_count + doc_count)
 
-		return wars_counts, cebs_counts, hilis_counts
+		return hil_count
 
-	# def testing(self, user_input, waray_count, cebu_count, hili_count, doc_count, warays, hiligs, cebus):
-	# 	war_count = 0
-	# 	ceb_count = 0
-	# 	hil_count = 0
-	# 	smooth_war = 1
-	# 	smooth_ceb = 1
-	# 	smooth_hil = 1
+	def smooth_waray(self, *args):
+		waray_count = Language.objects.filter(dialect='Waray').count()
+		doc_count = Language.objects.count()
+		sentence = self.lower()
+		user_inputs = sentence.split(' ')
+		smooth_war = 1
 
-	# 	priorLogWar = waray_count/doc_count
-	# 	priorLogCeb = cebu_count/doc_count
-	# 	priorLogHil = hili_count/doc_count
+		for items in user_inputs:
+			if Language.objects.filter(word=items, dialect='Waray').exists():
+				pass
+			else:
+				smooth_war *= 1 / (waray_count + doc_count)
 
+		return smooth_war
 
-	# 	for waray in warays:
-	# 		for user_input in user_inputs:
-	# 			if waray.word != user_input:
-	# 				war_count += 1 / (waray_count + doc_count)
-	# 				wars_count *= war_count
-	# 				smooth_war = wars_count / 2
+	def smooth_cebuano(self, *args):
+		cebu_count = Language.objects.filter(dialect='Cebuano').count()
+		doc_count = Language.objects.count()
+		sentence = self.lower()
+		user_inputs = sentence.split(' ')
+		smooth_ceb = 1
 
-	# 	for cebu in cebus:
-	# 		for user_input in user_inputs:
-	# 			if cebu.word != user_input:
-	# 				ceb_count += 1 / (cebu_count + doc_count)
-	# 				cebs_count *= ceb_count
-	# 				smooth_ceb = cebs_count / 2
+		for items in user_inputs:
+			if Language.objects.filter(word=items, dialect='Cebuano').exists():
+				pass
+			else:
+				smooth_ceb *= 1 / (cebu_count + doc_count)
 
-	# 	for hilig in hiligs:
-	# 		for user_input in user_inputs:
-	# 			if hilig.word != user_input:
-	# 				hil_count += 1 / (hili_count + doc_count)
-	# 				hilis_count *= hil_count
-	# 				smooth_hil = hilis_count / 2
+		return smooth_ceb
 
-	# 	import pdb; pdb.set_trace()
-	# 	return smooth_war, smooth_ceb, smooth_hil
+	def smooth_hiligaynon(self, *args):
+		hili_count = Language.objects.filter(dialect='Hiligaynon').count()
+		doc_count = Language.objects.count()
+		sentence = self.lower()
+		user_inputs = sentence.split(' ')
+		smooth_hil = 1
+		
+		for items in user_inputs:
+			if Language.objects.filter(word=items, dialect='Hiligaynon').exists():
+				pass
+			else:
+				smooth_hil *= 1 / (hili_count + doc_count)
+
+		return smooth_hil
+
+	def multi_words(war_count, ceb_count, hil_count, smooth_war, smooth_ceb, smooth_hil):
+		waray_count = Language.objects.filter(dialect='Waray').count()
+		cebu_count = Language.objects.filter(dialect='Cebuano').count()
+		hili_count = Language.objects.filter(dialect='Hiligaynon').count()
+		doc_count = Language.objects.count()
+		
+		priorLogWar = waray_count/doc_count
+		priorLogCeb = cebu_count/doc_count
+		priorLogHil = hili_count/doc_count
+
+		war_val = war_count * smooth_war
+		ceb_val = ceb_count * smooth_ceb
+		hil_val = hil_count * smooth_hil
+
+		
+		if war_val > ceb_val and war_val > hil_val:
+			print("Waray")
+		elif ceb_val > war_val and ceb_val > hil_val:
+			print("Cebuano")
+		elif hil_val > war_val and hil_val > ceb_val:
+			print("Hiligaynon")
+
+		# import pdb; pdb.set_trace()
