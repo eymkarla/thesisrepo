@@ -9,7 +9,7 @@ from classifier.NB import NaiveBayes
 
 
 class ClassifyView(TemplateView):
-	template_name = "classifier/classify.html"
+	template_name = "classifier/home.html"
 
 	def get(self, request):
 		form = InputForm()
@@ -30,12 +30,13 @@ class ResultView(TemplateView):
 	def get(self, request, *args, **kwargs):
 		text_input = deepcopy(kwargs['text_input'])
 		form = InputForm(initial={'text_input':text_input})
-		naive1 = NaiveBayes.train_waray(text_input)
-		naive2 = NaiveBayes.train_cebuano(text_input)
-		naive3 = NaiveBayes.train_hiligaynon(text_input)
-		naive4 = NaiveBayes.smooth_waray(text_input)
-		naive5 = NaiveBayes.smooth_cebuano(text_input)
-		naive6 = NaiveBayes.smooth_hiligaynon(text_input)
+		split1 = NaiveBayes.split_word(text_input)
+		naive1 = NaiveBayes.train_waray(split1)
+		naive2 = NaiveBayes.train_cebuano(split1)
+		naive3 = NaiveBayes.train_hiligaynon(split1)
+		naive4 = NaiveBayes.smooth_waray(split1)
+		naive5 = NaiveBayes.smooth_cebuano(split1)
+		naive6 = NaiveBayes.smooth_hiligaynon(split1)
 		naive7 = NaiveBayes.multi_words(naive1, naive2, naive3, naive4, naive5, naive6)
 
 		print('war: %s\nceb: %s\nhil: %s\nsmooth_war: %s\nsmooth_ceb: %s\nsmooth_hil: %s ' % (naive1,naive2,naive3,naive4,naive5,naive6))
@@ -43,11 +44,11 @@ class ResultView(TemplateView):
 		return render(request, self.template_name, {'form': form, 'display_input': text_input}, )
 
 
-def home(request):
-	 return render(request,'classifier/home.html')
-
 def dictionary(request):
 	 return render(request,'classifier/dictionary.html')
 
-def sam(request):
-	 return render(request,'classifier/s.html')
+def classifier(request):
+	 return render(request,'classifier/classifier.html')
+
+def clasify(request):
+	 return render(request,'classifier/clasify.html')

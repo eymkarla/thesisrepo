@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog_responsive.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/dictionary.css'%}">
 </head>
 
 <body>
@@ -76,90 +77,74 @@
 		</div>
 	</div>
 
-	<!-- Dictionary -->
-	
-
-	
-	<div class="pricing">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title_container text-center">
-						<div class="section_title"><h2>DICTIONARY</h2></div>
-					</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="dictionary-waray text-center">CEBUANO DICTIONARY</h1>
+			<div class="container">
+				<div class="pagination">
+				  <ul>
+					<li><a href="#">A</a></li>
+					<li><a href="#">B</a></li>
+					<li><a href="#">C</a></li>
+					<li><a href="#">D</a></li>
+					<li><a href="#">E</a></li>
+					<li><a href="#">F</a></li>
+					<li><a href="#">G</a></li>
+					<li><a href="#">H</a></li>
+					<li><a href="#">I</a></li>
+					<li><a href="#">J</a></li>
+					<li><a href="#">K</a></li>
+					<li><a href="#">L</a></li>
+					<li><a href="#">M</a></li>
+					<li><a href="#">N</a></li>
+					<li><a href="#">O</a></li>
+					<li><a href="#">P</a></li>
+					<li><a href="#">Q</a></li>
+					<li><a href="#">R</a></li>
+					<li><a href="#">S</a></li>
+					<li><a href="#">T</a></li>
+					<li><a href="#">U</a></li>
+					<li><a href="#">V</a></li>
+					<li><a href="#">W</a></li>
+					<li><a href="#">X</a></li>
+					<li><a href="#">Y</a></li>
+					<li><a href="#">Z</a></li>
+				  </ul>
 				</div>
 			</div>
-			<div class="row pricing_row">
-				
-				<!-- LIST OF DICTIONARY -->
-				<div class="col-lg-4">
-					<div class="pricing_item trans_200">
-						<div class="pricing_item_background trans_200"></div>
-						<div class="pricing_title_container d-flex flex-column align-items-center justify-content-start">
-							<div class="pricing_title_background trans_200">
-								<svg class="waves" width="100%" height="100%" viewBox="0 0 1920 218" preserveAspectRatio="none">
-									<path class="wave_path trans_200" fill="url(#grad_1)" d="M0,0 V210 S500,218 860,193  S1400,125 1920,155 V0 H0"></path>
-									<defs>
-										<linearGradient id="grad_1">
-											<stop offset="0%" stop-color="#487fee" />
-											<stop offset="100%" stop-color="#b632fa" />
-										</linearGradient>
-										<linearGradient id="grad_2">
-											<stop offset="0%" stop-color="#9cb9f6" />
-											<stop offset="100%" stop-color="#d691fc" />
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-							<div class="pricing_title"></div>
-							<div class="pricing_price">Cebuano</div>
-						</div>
-						<div class="pricing_content d-flex flex-column align-items-center justify-content-start">
-							<div class="button pricing_button trans_200"><a href="{% url 'cebuano_dictionary' %}">OPEN</a></div>
-						</div>
+			<div class="container dictionary-container">
+			{% for post in posts %}
+			<section class="all-waray">
+				<div class="row">
+					<div class="col-md-8">
+						<b>{{post.word}}</b>
+						<p class="event-description truncate">{{post.meaning}}</p>
 					</div>
 				</div>
+			</section>
+			{% endfor %}
+				<div class="pagination">
+					<span class="step-links" style="padding-left: 20px;">
+						{% if posts.has_previous %}
+							<a href="?page=1">&laquo; First</a>
+							<a href="?page={{ posts.previous_page_number }}">Previous</a>
+						{% endif %}
 
-				<!-- Pricing Item -->
-				<div class="col-lg-4">
-					<div class="pricing_item trans_200">
-						<div class="pricing_item_background trans_200"></div>
-						<div class="pricing_title_container d-flex flex-column align-items-center justify-content-start">
-							<div class="pricing_title_background trans_200">
-								<svg class="waves" width="100%" height="100%" viewBox="0 0 1920 218" preserveAspectRatio="none">
-									<path class="wave_path trans_200" fill="url(#grad_1)" d="M0,0 V210 S500,218 860,193  S1400,125 1920,155 V0 H0"></path>
-								</svg>
-							</div>
-							<div class="pricing_title"></div>
-							<div class="pricing_price">Hiligaynon</div>
-						</div>
-						<div class="pricing_content d-flex flex-column align-items-center justify-content-start">
-							<div class="button pricing_button trans_200"><a href="{% url 'hiligaynon_dictionary' %}">OPEN</a></div>
-						</div>
-					</div>
-				</div>
+						<span class="current" style="padding-left: 570px;">
+							Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+						</span>
 
-				<!-- Pricing Item -->
-				<div class="col-lg-4">
-					<div class="pricing_item trans_200">
-						<div class="pricing_item_background trans_200"></div>
-						<div class="pricing_title_container d-flex flex-column align-items-center justify-content-start">
-							<div class="pricing_title_background trans_200">
-								<svg class="waves" width="100%" height="100%" viewBox="0 0 1920 218" preserveAspectRatio="none">
-									<path class="wave_path trans_200" fill="url(#grad_1)" d="M0,0 V210 S500,218 860,193  S1400,125 1920,155 V0 H0"></path>
-								</svg>
-							</div>
-							<div class="pricing_title"></div>
-							<div class="pricing_price">Waray</div>
-						</div>
-						<div class="pricing_content d-flex flex-column align-items-center justify-content-start">
-							<div class="button pricing_button trans_200"><a href="{% url 'waray_dictionary' %}">OPEN</a></div>
-						</div>
-					</div>
+						{% if posts.has_next %}
+							<a href="?page={{ posts.next_page_number }}">Next</a>
+							<a href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+						{% endif %}
+					</span>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
 

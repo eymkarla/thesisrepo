@@ -17,7 +17,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog_responsive.css'%}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/dictionary.css'%}">
 </head>
 
 <body>
@@ -60,30 +59,24 @@
 			</div>
 		</div>
 	</div>
-
-
 <!-- CLASSIFY -->
 
-	<div class="classify">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="home_content text-center">
-						<div class="home_title">What do you want to classify?</div>	
-						<div class="domain_search_container">
-							<div class="container">
-								<div class="row">
-									<div class="col">
-										<div class="domain_search">
-											<div class="domain_search_background"></div>
-											<form method="POST" class="domain_search_form" id="domain_search_form">
-												{% csrf_token %}
-													{{form.as_p}}
-												<button class="domain_search_button">classify</button>
-											</form>
-										</div>
-									</div>
-								</div>
+	<div class="home">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/index.jpg" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content text-center">
+							<div class="home_title">What do you want to classify?</div>
+							<div class="domain_search">
+								<div class="domain_search_background"></div>
+								<form method="POST" class="domain_search_form" id="domain_search_form">
+									{% csrf_token %}
+									{{form.as_p}}
+									<input type="text" class="domain_search_input" placeholder="Input text here" required="required">
+									<button type ="submit" name= "classify" class="domain_search_button">classify</button>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -93,19 +86,20 @@
 	</div>
 
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap-4.1.2/popper.js"></script>
-<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-<script src="plugins/greensock/TweenMax.min.js"></script>
-<script src="plugins/greensock/TimelineMax.min.js"></script>
-<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="plugins/greensock/animation.gsap.min.js"></script>
-<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/progressbar/progressbar.min.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
-<script src="js/contact.js"></script>
+
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap-4.1.2/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap-4.1.2/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/progressbar/progressbar.min.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
 </body>
 </html>

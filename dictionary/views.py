@@ -1,9 +1,11 @@
 import csv, io
+from django.core.paginator import Paginator
 from copy import deepcopy
 from django.core.signing import Signer
 from django.shortcuts import render, redirect
 from django.db import models
 from django.http import HttpResponse
+from django.db.models import Q
 from .models import *
 from .forms import *
 
@@ -44,25 +46,42 @@ def impcsv(request):
 	context = {}
 	return render(request, template, context)
 
-def samples(request):
-	test = 'sirong sirong test test2'
-	test_lower = test.lower()
-	user_inputs = test_lower.split(' ')
-	warays = Language.objects.filter(dialect='Waray')
-	cebus = Language.objects.filter(dialect='Cebuano')
-	waray_count = 0
-	cebu_count = 0
+def search_form(request):
+   return render(request, 'dictionary/dictionary.html')
 
-	for waray in warays:
-		for user_input in user_inputs:
-			if waray.word == user_input:
-				waray_count += 1
-	
-	for cebu in cebus:
-		for user_input in user_inputs:
-			if cebu.word == user_input:
-				cebu_count += 1
+def search(request):
+	error = False
 
-	#import pdb; pdb.set_trace()
+	if 'q' in request.GET:
+		q = request.GET['q']
+		if not q:
+			error = True
+		else:
+			posts = Dialect.objects.filter( Q(word__icontains=q))
+			return render(request, 'classifier/search_result.html', {'posts':posts, 'query':q})
+	return render(request, 'classifier/dictionary.html', {'error': error})
 
-	return render(request,'classifier/samples.html')
+def waray_dictionary(request):
+	waray_list = Dialect.objects.filter(dialect='Waray')
+	paginator = Paginator(waray_list, 20)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+
+	return render(request, 'classifier/waray_dictionary.html', {'posts': posts} )
+
+def cebuano_dictionary(request):
+	cebuano_list = Dialect.objects.filter(dialect='Cebuano')
+	paginator = Paginator(cebuano_list, 20)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+
+	return render(request, 'classifier/cebuano_dictionary.html', {'posts': posts} )
+
+def hiligaynon_dictionary(request):
+	hiligaynon_list = Dialect.objects.filter(dialect='Hiligaynon')
+	paginator = Paginator(hiligaynon_list, 20)
+	page = request.GET.get('page')
+	posts = paginator.get_page(page)
+
+	return render(request, 'classifier/hiligaynon_dictionary.html', {'posts': posts} )
+

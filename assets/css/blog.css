@@ -64,7 +64,7 @@ p
 	font-size: 14px;
 	line-height: 2.18;
 	font-weight: 500;
-	color: #92a4b8;
+	color: #060b11;
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
@@ -221,7 +221,9 @@ section
 .super_container
 {
 	width: 100%;
+	background-size: contain, cover;
 	overflow: hidden;
+	background: #e1ebeb;
 }
 .prlx_parent
 {
@@ -558,7 +560,7 @@ section
 .home_content
 {
 	height: 382px;
-	padding-top: 196px;
+	padding-top: 40px;
 }
 .home_image
 {
@@ -572,16 +574,16 @@ section
 }
 .home_title
 {
-	font-size: 60px;
+	font-size: 50px;
 	font-weight: 600;
-	color: #FFFFFF;
+	color: #020F6E;
 	line-height: 1.2;
 }
 .domain_search_container
 {
 	position: absolute;
 	left: 0;
-	bottom: -45px;
+	bottom: 50;
 	width: 100%;
 }
 .domain_search
@@ -592,10 +594,10 @@ section
 .domain_search_background
 {
 	position: absolute;
-	top: 0;
+	top: 37px;
 	left: 0;
 	width: 100%;
-	height: 100%;
+	height: 42.5%;
 	background: linear-gradient(to right, #487fee, #b632fa);
 	opacity: 0.33;
 	border-radius: 45px;
@@ -608,7 +610,6 @@ section
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: #fff;
 	opacity: 0.1;
 	border-radius: 45px;
 	z-index: 0;
@@ -726,21 +727,22 @@ section
 }
 .domain_search_button
 {
-	position: absolute;
+	position: relative;
 	top: 0;
 	right: 0;
-	width: 193px;
+	width: 255px;
 	height: 70px;
 	background: linear-gradient(to right, #487fee, #b632fa);
 	border: none;
 	outline: none;
 	border-radius: 35px;
 	z-index: 2;
-	font-size: 14px;
+	font-size: 17px;
 	font-weight: 700;
 	color: #FFFFFF;
 	text-transform: uppercase;
 	cursor: pointer;
+	margin-top: 20px;
 }
 
 /*********************************
@@ -1218,3 +1220,4 @@ section
 	font-weight: 500;
 	color: #464f59;
 }
+

@@ -1,12 +1,111 @@
-<div class="home_content text-center">
-							<div class="home_title">What do you want to classify?</div>
-							<div class="domain_search">
-								<div class="domain_search_background"></div>
-								<form method="POST"class="domain_search_form" id="domain_search_form">
-									{% csrf_token %}  
-									{{ form.as_p }}
-									<button type="submit" name="classify" class="domain_search_button">classify</button>
-								</form>
-								<p> {{ display_input }} </p>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>DiAlexa</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-4.1.2/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/blog_responsive.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/dictionary.css'%}">
+</head>
+
+<body>
+
+<div class="super_container">
+	
+	<!-- Header -->
+
+	<header class="header trans_400">
+		<div class="header_content d-flex flex-row align-items-center justify-content-start">
+			<div class="logo"><a href="#"><span>D</span>ialexa</a></div>
+			<div class="header_right d-flex flex-row align-items-center justify-content-start">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-10 offset-lg-2">
+							<nav class="main_nav">
+								<ul class="d-flex flex-row align-items-center justify-content-start">
+									<li class="active"><a href="{% url 'home' %}">Home</a></li>
+									<li><a href="{% url 'dictionary' %}">Dictionary</a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!-- If minimize Hamburger -->
+				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
+			</div>	
+		</div>
+	</header>
+
+	<!-- Menu -->
+
+	<div class="menu trans_500">
+		<div class="menu_content d-flex flex-column align-items-center justify-content-center">
+			<div class="menu_nav trans_500">
+				<ul class="text-center">
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'dictionary' %}">Dictionary</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+<!-- CLASSIFY -->
+
+	<div class="classify">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="home_content text-center">
+						<div class="home_title">CLASSIFIED AS: {{ dialect }} </div>	
+						<div class="domain_search_container">
+							<div class="container">
+								<div class="row">
+									<div class="col">
+										<div class="domain_search">
+											<div class="domain_search_background"></div>
+											<form action= "{% url 'home' %}" method="POST" class="domain_search_form" id="domain_search_form">
+												{% csrf_token %}
+													{{form.as_p}}
+											</form>
+											<a href="{% url 'home' %}"><button formaction="{% url 'home' %}" class="domain_search_button">CLASSIFY AGAIN</button></a>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="styles/bootstrap-4.1.2/popper.js"></script>
+<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+<script src="plugins/greensock/TweenMax.min.js"></script>
+<script src="plugins/greensock/TimelineMax.min.js"></script>
+<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="plugins/greensock/animation.gsap.min.js"></script>
+<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="plugins/progressbar/progressbar.min.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src="js/contact.js"></script>
+</body>
+</html>

@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog_responsive.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/dictionary.css'%}">
 </head>
 
 <body>
@@ -33,9 +34,9 @@
 					<div class="col-lg-5 offset-lg-2">
 						<nav class="main_nav">
 							<div class="search_form_container">
-								<form action="#" id="search_form" class="search_form">
-									<input type="text" class="search_input" required="required">
-									<button class="search_button">Search</button>
+								<form action="{% url 'search' %}" method="GET" id="search_form" class="search_form">
+									<input type="text" name="q" class="search_input" required="required">
+									<button type ="submit" class="search_button">Search</button>
 								</form>
 							</div>
 						</nav>
@@ -50,8 +51,8 @@
 						<div class="col-lg-10 offset-lg-2">
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-center justify-content-start">
-									<li class="active"><a href="index.html">Home</a></li>
-									<li><a href="about.html">Dictionary</a></li>
+									<li><a href="{% url 'home' %}">Home</a></li>
+									<li class="active"><a href="{% url 'dictionary' %}">Dictionary</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -69,39 +70,38 @@
 		<div class="menu_content d-flex flex-column align-items-center justify-content-center">
 			<div class="menu_nav trans_500">
 				<ul class="text-center">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="about.html">Dictionary</a></li>
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'dictionary' %}">Dictionary</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-<!-- Search Result -->
-
-	<div class="container">
-    	<div class="search-wrapper">
-     		 <h1 class="searched">You searched for: <strong>{{ query }}</strong></h1>
-      			{% if posts %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="searched">You searched for: <strong>{{ query }}</strong></h1>
+				{% if posts %}
       			<p class="post"> Found {{ posts|length }} posts{{ post|pluralize }}. </p>
-      				<div class="search-item">
-       			{% for post in posts %} 
-        					<a href="{% url 'post_details' post.id %}" class="search-title"><b>{{ post.title }}</b></a>
-        					<p class="search-description">{{ post.description }}</p>
-      				</div>
-      			{% endfor %} 
+      				<div class="container search-item">
+					{% for post in posts %}
+					<section class="all-waray">
+						<div class="row">
+							<div class="col-md-8">
+								<b>{{post.word}}</b>
+								<p class="event-description truncate">{{post.meaning}}</p>
+								<a>{{post.dialect}}</a>
+							</div>
+						</div>
+					</section>
+					{% endfor %}
+					</div>
       			{% endif %}
-    	</div>
+		</div>
 	</div>
- 
-
-	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="copyright_bar text-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-	</footer>
 </div>
+
+
 
 <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 <script src="{% static 'styles/bootstrap-4.1.2/popper.js' %}"></script>
