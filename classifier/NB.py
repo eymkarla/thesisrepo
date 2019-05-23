@@ -7,7 +7,6 @@ from dictionary.models import Dialect
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from django.shortcuts import render, redirect
-from django.template import Context
 
 class NaiveBayes:
 
@@ -15,7 +14,7 @@ class NaiveBayes:
 		stop_words_lst = set(stopwords.words("english"))
 		stop_words_lst.update (('ako','ang','amua','ato','busa','ikaw','ila','ilang','imo','imong','iya','iyang','kaayo','kana',
 'kaniya','kaugalingon','kay','kini','kinsa','kita','lamang','mahimong','mga','mismo','nahimo'
-,'nga','pareho','pud','sila','siya','unsa','sa','ug','nang', 'ng','diay', 'atu'))
+,'nga','pareho','pud','sila','siya','unsa','sa','ug','nang', 'ng','diay', 'atu', 'mo'))
 		sentence = self.lower()
 
 		new_str = ' '.join([word for word in sentence.split(' ') if word not in stop_words_lst]) 
@@ -35,7 +34,7 @@ class NaiveBayes:
 			for user_input in user_inputs:
 				if waray.word == user_input:
 					war_count *= (1 + 1) / (waray_count + doc_count)
-		
+
 		return war_count
 	
 	def train_cebuano(new_str):
@@ -123,18 +122,32 @@ class NaiveBayes:
 		priorLogCeb = cebu_count/doc_count
 		priorLogHil = hili_count/doc_count
 
-		war_val = war_count * smooth_war * priorLogWar
-		ceb_val = ceb_count * smooth_ceb * priorLogCeb
-		hil_val = hil_count * smooth_hil * priorLogHil
+		war_val = 0
+		ceb_val = 0
+		hil_val = 0
+
+
+		if war_count == 1:
+			war_val *= war_count
+		else:
+			war_val = war_count * smooth_war * priorLogWar
+
+		if ceb_count == 1:
+			ceb_val *= ceb_count
+		else:
+			ceb_val = ceb_count * smooth_ceb * priorLogCeb
+
+		if hil_count == 1:
+			hil_val *= hil_count
+		else:
+			hil_val = hil_count * smooth_hil * priorLogHil
+		
 		
 		if war_val > ceb_val and war_val > hil_val:
-			return war_val
-			print("Waray")
+			return 'Waray'
 		elif ceb_val > war_val and ceb_val > hil_val:
-			return ceb_val
-			print("Cebuano")
+			return 'Cebuano'
 		elif hil_val > war_val and hil_val > ceb_val:
-			return hil_val
-			print("Hiligaynon")
-
-		# import pdb; pdb.set_trace()
+			return 'Hiligaynon'
+		elif war_val and ceb_val and hil_val == 0:
+			return 'Word does not exist'

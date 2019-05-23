@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, Http404
 from .models import InputDialect
 from .forms import InputForm
 from classifier.NB import NaiveBayes
+from django.template import Template, Context
 
 
 class ClassifyView(TemplateView):
@@ -41,7 +42,8 @@ class ResultView(TemplateView):
 
 		print('war: %s\nceb: %s\nhil: %s\nsmooth_war: %s\nsmooth_ceb: %s\nsmooth_hil: %s ' % (naive1,naive2,naive3,naive4,naive5,naive6))
 
-		return render(request, self.template_name, {'form': form, 'display_input': text_input}, )
+		return render(request, self.template_name,{'form': form, 'display_input': text_input, 'naive7': naive7}, )
+
 
 
 def dictionary(request):
