@@ -2,6 +2,7 @@ import math
 import nltk
 nltk.download('stopwords')
 import pandas as pd
+import re
 from copy import deepcopy
 from dictionary.models import Dialect
 from nltk.corpus import stopwords
@@ -10,12 +11,19 @@ from django.shortcuts import render, redirect
 
 class NaiveBayes:
 
-	def split_word(self, *args):
+	def split_reg(self, *args):
+		sentence = self.lower()
+
+		new = ' '.join([word for word in re.split(r'[^A-Za-z]', sentence) if word])
+
+		return new
+
+	def split_word(new):
 		stop_words_lst = set(stopwords.words("english"))
 		stop_words_lst.update (('ako','ang','amua','ato','busa','ikaw','ila','ilang','imo','imong','iya','iyang','kaayo','kana',
 'kaniya','kaugalingon','kay','kini','kinsa','kita','lamang','mahimong','mga','mismo','nahimo'
 ,'nga','pareho','pud','sila','siya','unsa','sa','ug','nang', 'ng','diay', 'atu', 'mo'))
-		sentence = self.lower()
+		sentence = new.lower()
 
 		new_str = ' '.join([word for word in sentence.split(' ') if word not in stop_words_lst]) 
 
