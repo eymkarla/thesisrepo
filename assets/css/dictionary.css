@@ -181,3 +181,12 @@ ul { padding: 0; }
  	max-width: 1050px;
   margin-top: 70px;
  }
+
+#banner input[type="submit"].alt:hover, #banner input[type="reset"].alt:hover, #banner input[type="button"].alt:hover, #banner button.alt:hover, #banner .button.alt:hover {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+p.info {
+  color: white;
+  font-weight: lighter;
+}

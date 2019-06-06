@@ -46,12 +46,6 @@ class ResultView(TemplateView):
 		return render(request, self.template_name,{'form': form, 'display_input': text_input, 'naive7': naive7}, )
 
 
+def homepage(request):
+	 return render(request,'classifier/homepage.html')
 
-def dictionary(request):
-	 return render(request,'classifier/dictionary.html')
-
-def classifier(request):
-	 return render(request,'classifier/classifier.html')
-
-def clasify(request):
-	 return render(request,'classifier/clasify.html')
